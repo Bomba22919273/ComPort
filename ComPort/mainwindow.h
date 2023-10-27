@@ -2,6 +2,18 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QWidget>
+
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
+#include <QtBluetooth/QBluetoothDeviceDiscoveryAgent>
+#include <QtBluetooth/QBluetoothLocalDevice>
+#include <QMutex>
+#include <QThread>
+#include <QWaitCondition>
+
+#include <QTimer>
+#include <QTime>
 
 namespace Ui {
 class MainWindow;
