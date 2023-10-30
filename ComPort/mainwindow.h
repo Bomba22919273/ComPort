@@ -30,6 +30,10 @@ private slots:
 
     void on_ConnectButton_clicked();
 
+    void on_DisconnectButton_clicked();
+
+    void on_ClearButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer *tmr;

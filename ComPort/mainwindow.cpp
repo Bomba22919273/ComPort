@@ -109,3 +109,16 @@ void MainWindow::on_ConnectButton_clicked()
         ui->textBrowser->setTextColor(Qt::black);
     }
 }
+
+void MainWindow::on_DisconnectButton_clicked()
+{
+    serialPort.close();
+    ui->textBrowser->clear();
+    ui->textBrowser->append("Disconnected from COM");
+    buffer.remove(0,100);
+}
+
+void MainWindow::on_ClearButton_clicked()
+{
+    ui->textBrowser->clear();
+}
