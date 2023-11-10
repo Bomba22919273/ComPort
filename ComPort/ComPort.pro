@@ -4,9 +4,12 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui serialport charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets serialport
+
+INCLUDEPATH += D:\Qt\qwt-6.1.4\qwt-6.1.4\include
+LIBS += -LD:\Qt\qwt-6.1.4\qwt-6.1.4\lib-lqwt
 
 TARGET = ComPort
 TEMPLATE = app

@@ -9,7 +9,26 @@
 #include <QMutex>
 #include <QThread>
 #include <QWaitCondition>
+#include <QTimer>
+#include <QTime>
+#include <QLCDNumber>
+#include <QtCharts>
+#include <QChartView>
+#include <QLineSeries>
+#include <QDateTimeAxis>
+#include <QSplineSeries>
+#include <QtCharts/QChartView>
+#include <QtCharts/QSplineSeries>
+#include <QDateTimeAxis>
+#include <QValueAxis>
+#include <QTimer>
+#include "QDateTime"
 
+QT_CHARTS_USE_NAMESPACE   // Использование QChart должно добавить это предложение
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
 
 
 namespace Ui {
@@ -22,9 +41,15 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+
     ~MainWindow();
+    void initDraw_X();
+    void initDraw_Y();
 
 private slots:
+
+
+
     void receiveMessage();
     void on_RefreshButton_clicked();
 
@@ -34,8 +59,27 @@ private slots:
 
     void on_ClearButton_clicked();
 
+    void on_StopButton_clicked();
+
+    void updateDateTime();
+
+
+
 private:
     Ui::MainWindow *ui;
+
+    QTimer *timer;                           // Таймер
+        QChart *chart_X;
+        QChart *chart_Y; //холст
+        QSplineSeries *series_X;                     //линия
+        QSplineSeries *series_Y;
+        QDateTimeAxis *axisX_X;                    //ось
+        QDateTimeAxis *axisX_Y;
+        QValueAxis *axisY_X;
+        QValueAxis *axisY_Y;
+
+
+
     QTimer *tmr;
     QSerialPort serialPort;
     QSerialPortInfo info;
@@ -43,8 +87,8 @@ private:
     QString code;
     QString x;
     QString y;
-    QString x_0;
-    QString y_0;
+    QString x0;
+    QString y0;
     QString hs;
     int codeSize;
     int after_hex1;
@@ -63,8 +107,15 @@ private:
     int x6;
     int x7;
     int x8;
-    int arr[8];
+    int arrX[8];
+    int arrForMODBus[8];
     bool ok;
+    int base;
 };
-
+class Sleeper : public QThread
+{
+public:
+    static void usleep(unsigned long usecs){QThread::usleep(usecs);}
+    static void msleep(unsigned long msecs){QThread::msleep(msecs);}
+ };
 #endif // MAINWINDOW_H
