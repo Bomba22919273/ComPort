@@ -8,8 +8,7 @@ QT       += core gui serialport charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets serialport
 
-INCLUDEPATH += D:\Qt\qwt-6.1.4\qwt-6.1.4\include
-LIBS += -LD:\Qt\qwt-6.1.4\qwt-6.1.4\lib-lqwt
+
 
 TARGET = ComPort
 TEMPLATE = app
@@ -29,13 +28,20 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    axis.cpp \
+    button.cpp \
+    events.cpp \
+    time.cpp \
+
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
