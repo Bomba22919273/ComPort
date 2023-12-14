@@ -50,9 +50,7 @@ private slots:
     void updateDateTime();
     void draw_axis_X();
     void draw_axis_Y();
-    void draw_axis_XY0();
     void clearAxis();
-    void initDraw_XY0();
     void initDraw_X();
     void initDraw_Y();
     void initDraw_XY();
@@ -71,7 +69,6 @@ private:
 
     QChart *chart_X;
     QChart *chart_Y;
-    QChart *chart_XY0;
     QChart *chart_XY;
     QSplineSeries *series_X;
     QSplineSeries *series_Y;
@@ -81,8 +78,6 @@ private:
     QDateTimeAxis *axisX_forChart_Y;
     QValueAxis *axisY_forChart_X;
     QValueAxis *axisY_forChart_Y;
-    QValueAxis *axisX_forChart_XY0;
-    QValueAxis *axisY_forChart_XY0;
     QValueAxis *axisX_forChart_XY;
     QValueAxis *axisY_forChart_XY;
     QTimer *tmrAxis;
@@ -90,18 +85,13 @@ private:
     QTimer *tmrXY;
     int number_X;
     int number_Y;
-    int number_X0;
-    int number_Y0;
+    double gravity;
+    double springTemperature;
     int codeSize;
     int rangeMin_X = 5000;
     int rangeMin_Y = 5000;
-    int rangeMin_Y0 = 5000;
-    int rangeMin_X0 = 5000;
-
     int rangeMax_X = -5000;
     int rangeMax_Y = -5000;
-    int rangeMax_X0 = -5000;
-    int rangeMax_Y0 = -5000;
     QSerialPort serialPort;
     QSerialPortInfo info;
     QString buffer;

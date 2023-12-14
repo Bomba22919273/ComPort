@@ -4,7 +4,7 @@
 
 void MainWindow::on_ConnectButton_clicked()
 {
-    qWarning() << "in con but";
+
     QString portName = ui->comboBox_CP->currentText(); //CP- ComPort
     ui->textBrowser->append("Подключаюсь к:");
     ui->textBrowser->append(portName);
@@ -24,14 +24,13 @@ void MainWindow::on_ConnectButton_clicked()
         serialPort.setStopBits(QSerialPort::OneStop);
         serialPort.setParity(QSerialPort::NoParity);
         serialPort.setFlowControl(QSerialPort::NoFlowControl);
-        // Коннектимся к receiveMessage чтобы у нас все работало
         ui->textBrowser->setTextColor(Qt::green);
         ui->textBrowser->append("Connected to COM");
         ui->textBrowser->setTextColor(Qt::black);
 
     }
     tmrXY = new QTimer(this);
-    tmrXY -> setInterval(50);
+    tmrXY -> setInterval(500);
     connect(tmrXY, SIGNAL(timeout()), this, SLOT(clear_XY()));
     tmrXY -> start();
 
