@@ -33,14 +33,20 @@ SOURCES += \
     button.cpp \
     events.cpp \
     time.cpp \
+    charts.cpp \
+    logs.cpp
 
 
 HEADERS += \
         mainwindow.h \
+    charts.h \
+    logs.h
 
 
 FORMS += \
         mainwindow.ui \
+    charts.ui \
+    logs.ui
 
 
 # Default rules for deployment.

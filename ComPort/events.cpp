@@ -1,8 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "charts.h"
+#include "ui_charts.h"
 
 
-void MainWindow::wheelEvent(QWheelEvent *event)
+void Charts::wheelEvent(QWheelEvent *event)
 {
     int delta = event->angleDelta().y();
 
@@ -22,17 +24,17 @@ void MainWindow::wheelEvent(QWheelEvent *event)
         event->accept();
     }
 
-    if(ui->graphicsView_XY->underMouse())
-    {
-        if (delta > 0) { chart_XY->zoomIn(); }
-        else { chart_XY->zoomOut(); }
+//    if(ui->graphicsView_XY->underMouse())
+//    {
+//        if (delta > 0) { chart_XY->zoomIn(); }
+//        else { chart_XY->zoomOut(); }
 
-        event->accept();
-    }
+//        event->accept();
+//    }
 
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event)
+void Charts::keyPressEvent(QKeyEvent *event)
 {
     if(ui->graphicsView_X->underMouse())
     {

@@ -7,9 +7,6 @@
 #include <QWidget>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
-#include <QTimer>
-#include <QMutex>
-#include <QThread>
 #include <QTime>
 #include <QtCharts>
 #include <QChartView>
@@ -21,7 +18,9 @@
 #include <QDateTimeAxis>
 #include <QValueAxis>
 #include <QTimer>
-
+#include <QLCDNumber>
+#include "charts.h"
+#include "logs.h"
 
 
 namespace Ui {
@@ -39,96 +38,61 @@ public:
 
 
 
-
-protected:
+signals:
+    void open_charts();
+    void open_logs(QString);
 
 
 private slots:
 
-    void wheelEvent(QWheelEvent *event);
-    void keyPressEvent(QKeyEvent *event);
+
     void updateDateTime();
-    void draw_axis_X();
-    void draw_axis_Y();
-    void clearAxis();
-    void initDraw_X();
-    void initDraw_Y();
-    void initDraw_XY();
+    void initDrawChart_XY();
     void receiveMessage();
     void on_RefreshButton_clicked();
     void on_ConnectButton_clicked();
-    void on_DisconnectButton_clicked();
-    void on_ClearButton_clicked();
-    void on_StopButton_clicked();
-    void clear_XY();
+    void clearXY(int number_X, int number_Y );
+    void on_openLogsButton_clicked();
+    void on_openChartsButton_clicked();
 
 private:
 
     Ui::MainWindow *ui;
+    Logs *logs;
+    Charts *charts;
 
-
-    QChart *chart_X;
-    QChart *chart_Y;
-    QChart *chart_XY;
-    QSplineSeries *series_X;
-    QSplineSeries *series_Y;
-    QScatterSeries *series_X0Y0;
-    QScatterSeries *series_XY;
-    QDateTimeAxis *axisX_forChart_X;
-    QDateTimeAxis *axisX_forChart_Y;
-    QValueAxis *axisY_forChart_X;
-    QValueAxis *axisY_forChart_Y;
-    QValueAxis *axisX_forChart_XY;
-    QValueAxis *axisY_forChart_XY;
-    QTimer *tmrAxis;
-    QTimer *tmr;
-    QTimer *tmrXY;
-    int number_X;
-    int number_Y;
-    double gravity;
-    double springTemperature;
-    int codeSize;
-    int rangeMin_X = 5000;
-    int rangeMin_Y = 5000;
-    int rangeMax_X = -5000;
-    int rangeMax_Y = -5000;
-    QSerialPort serialPort;
-    QSerialPortInfo info;
-    QString buffer;
-    QString code;
+    QString jsonString;
     QString x;
     QString y;
     QString x0;
     QString y0;
-    //QString x_s = QString::number(delta_x,10);
-    //QString y_s = QString::number(delta_y,10);
-    QString hs;
 
-    int after_hex1;
-    int after_hex2;
-    int after_hex3;
-    int after_hex4;
-    int after_hex5;
-    int after_hex_wo_hs;
-    int delta_x;
-    int delta_y;
-    int x1;
-    int x2;
-    int x3;
-    int x4;
-    int x5;
-    int x6;
-    int x7;
-    int x8;
-    bool ok;
-    int arrX[8];
-    int arrForMODBus[8];
+
+    QChart *chart_XY;
+
+    QValueAxis *axisX_forChart_XY;
+    QValueAxis *axisY_forChart_XY;
+
+    QScatterSeries *series_X0Y0;
+    QScatterSeries *series_XY;
+
+
+
+    QTimer *tmrAxis;
+    QTimer *tmr;
+    QTimer *tmrXY;
+
+
+    QString portName;
+    QSerialPort serialPort;
+    QSerialPortInfo info;
+
     int X_max = -1000;
     int X_min =10000;
     int Y_max = -10000;
     int Y_min =10000;
 
-
+    bool ok;
 
 
 };

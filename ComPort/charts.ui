@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Charts</class>
+ <widget class="QWidget" name="Charts">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1650</width>
+    <height>692</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>График</string>
+  </property>
+  <widget class="QChartView" name="graphicsView_Y">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>701</width>
+     <height>471</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QChartView" name="graphicsView_X">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>80</y>
+     <width>841</width>
+     <height>471</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QGraphicsView</extends>
+   <header>QtCharts</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

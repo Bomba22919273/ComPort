@@ -1,8 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "charts.h"
+#include "ui_charts.h"
 
-
-void MainWindow::clearAxis()
+void Charts::clearAxis()
 {
     rangeMin_X = number_X ;
     rangeMax_X = number_X ;
@@ -10,13 +11,13 @@ void MainWindow::clearAxis()
     rangeMax_Y = number_Y;
 }
 
-void MainWindow::clear_XY()
+void MainWindow::clearXY(int number_X, int number_Y )
 {
-    initDraw_XY();
+    initDrawChart_XY();
     series_XY->append(number_X,number_Y);
 
 }
-void MainWindow::initDraw_X()
+void Charts::initDrawChart_X()
 {
     QPen penY_X(Qt::darkBlue,3,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
     chart_X = new QChart();
@@ -53,7 +54,7 @@ void MainWindow::initDraw_X()
 
 }
 
-void MainWindow::initDraw_Y()
+void Charts::initDrawChart_Y()
 {
     QPen penY_Y(Qt::darkRed,3,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
     chart_Y = new QChart();
@@ -90,7 +91,7 @@ void MainWindow::initDraw_Y()
 
 }
 
-void MainWindow::initDraw_XY()
+void MainWindow::initDrawChart_XY()
 {
     QPen penXY(Qt::darkGreen, 3, Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
     chart_XY = new QChart();
@@ -126,106 +127,7 @@ void MainWindow::initDraw_XY()
 }
 
 
-/*
- void MainWindow::initDraw_XY0()
-{
-    QPen penXY0(Qt::black, 3, Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
-    chart_XY0 = new QChart();
-    series_X0Y0 = new QScatterSeries();
-    axisX_forChart_XY0 = new QValueAxis();
-    axisY_forChart_XY0 = new QValueAxis();
-
-    chart_XY0->legend()->hide();
-    chart_XY0->addSeries(series_X0Y0);
-    axisX_forChart_XY0->setLinePenColor(QColor(Qt::black));        // Устанавливаем цветовой стиль оси
-    axisX_forChart_XY0->setGridLineColor(QColor(Qt::black));
-    axisY_forChart_XY0->setLinePenColor(QColor(Qt::black));        // Устанавливаем цветовой стиль оси
-    axisY_forChart_XY0->setGridLineColor(QColor(Qt::black));
-
-
-    axisX_forChart_XY0->setLinePen(penXY0);
-    axisY_forChart_XY0->setLinePen(penXY0);
-    axisY_forChart_XY0->setTickCount(5);
-    axisX_forChart_XY0->setTickCount(5);
-
-
-    chart_XY0->addAxis(axisX_forChart_XY0, Qt::AlignBottom);
-    chart_XY0->addAxis(axisY_forChart_XY0, Qt::AlignLeft);
-
-
-    series_X0Y0->attachAxis(axisX_forChart_XY0);                           // Добавляем данные на ось
-    series_X0Y0->attachAxis(axisY_forChart_XY0);
-
-    ui->graphicsView_XY0->setChart(chart_XY0);
-
-
-}
-
-
-void MainWindow::draw_axis_XY0()
-{
-
-    if( (number_X0 >= 0 && number_X0 < 1000) || (number_X0 <= 0 && number_X0 > -1000) )
-    {
-        if (number_X0 > rangeMax_X0 || number_Y0 >rangeMax_Y0)
-        {
-            rangeMax_X0 = number_X0;
-            axisX_forChart_XY0->setMax(rangeMax_X0 + 40);
-            rangeMax_Y0 = number_Y0;
-            axisY_forChart_XY0->setMax(rangeMax_Y0 + 40);
-
-        }
-
-        if (number_X0 < rangeMin_X0 || number_Y0 < rangeMin_Y0)
-        {
-            rangeMin_X0 = number_X0;
-            axisX_forChart_XY0->setMin(rangeMin_X0 - 40);
-            rangeMin_Y0 = number_Y0;
-            axisY_forChart_XY0->setMin(rangeMin_Y0 - 40);
-
-        }
-    }
-
-    if ( (number_X0 >= 1000 && number_X0 < 2000) || (number_X0 <= -1000 && number_X0 > -2000) )
-    {
-        if (number_X0 > rangeMax_X0 || number_Y0 >rangeMax_Y0)
-        {
-            rangeMax_X0 = number_X0;
-            axisX_forChart_XY0->setMax(rangeMax_X0 + 70);
-            rangeMax_Y0 = number_Y0;
-            axisY_forChart_XY0->setMax(rangeMax_Y0 + 70);
-        }
-
-        if (number_X0 < rangeMin_X0)
-        {
-            rangeMin_X0 = number_X0;
-            axisX_forChart_XY0->setMin(rangeMin_X0 - 70);
-
-        }
-    }
-    if( (number_X0 >= 2000 && number_X0 < 5000) || (number_X0 <= -2000 && number_X0 > -5000) )
-    {
-
-        if (number_X0 > rangeMax_X0|| number_Y0 >rangeMax_Y0)
-        {
-            rangeMax_X0 = number_X0;
-            axisX_forChart_XY0->setMax(rangeMax_X0 + 100);
-            rangeMax_Y0 = number_Y0;
-            axisY_forChart_XY0->setMax(rangeMax_Y0 + 100);
-
-        }
-
-        if (number_X0 < rangeMin_X0)
-        {
-            rangeMin_X0 = number_X0;
-            axisX_forChart_XY0->setMin(rangeMin_X0 - 100);
-
-        }
-    }
-}
-*/
-
-void MainWindow::draw_axis_X()
+void Charts::drawAxis_X()
 {
     if( (number_X >= 0 && number_X < 1000) || (number_X <= 0 && number_X > -1000) )
     {
@@ -276,7 +178,7 @@ void MainWindow::draw_axis_X()
     }
 }
 
-void MainWindow::draw_axis_Y()
+void Charts::drawAxis_Y()
 {
     if( (number_Y >= 0 && number_Y < 1000) || (number_Y <= 0 && number_Y > -1000) )
     {

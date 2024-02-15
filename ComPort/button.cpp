@@ -1,31 +1,25 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "logs.h"
+#include "ui_logs.h"
 
 
 void MainWindow::on_ConnectButton_clicked()
 {
 
     QString portName = ui->comboBox_CP->currentText(); //CP- ComPort
-    ui->textBrowser->append("Подключаюсь к:");
-    ui->textBrowser->append(portName);
+     ui->statusBar->showMessage("Подключаюсь... ");
+
     serialPort.setPortName(portName);
     if(!serialPort.open(QIODevice::ReadWrite)) {
-        ui->textBrowser->setTextColor(Qt::red);
-        ui->textBrowser->append("Не могу подключиться");
-        ui->textBrowser->setTextColor(Qt::black);
+        ui->statusBar->showMessage("Не могу подключиться");
     }
-    if(!serialPort.isOpen()) {
-        ui->textBrowser->setTextColor(Qt::red);
-        ui->textBrowser->append("Проблема с подключением");
-        ui->textBrowser->setTextColor(Qt::black);
+    else if(!serialPort.isOpen()) {
+        ui->statusBar->showMessage("Проблемы с подключением");
     } else {
-        serialPort.setBaudRate(QSerialPort::Baud9600);
-        serialPort.setDataBits(QSerialPort::Data8);
-        serialPort.setStopBits(QSerialPort::OneStop);
-        serialPort.setParity(QSerialPort::NoParity);
-        serialPort.setFlowControl(QSerialPort::NoFlowControl);
-        ui->textBrowser->setTextColor(Qt::green);
-        ui->textBrowser->append("Connected to COM");
+
+
+        ui->statusBar->showMessage("Connected is successfully");
         ui->textBrowser->setTextColor(Qt::black);
 
     }
@@ -36,26 +30,25 @@ void MainWindow::on_ConnectButton_clicked()
 
 }
 
-void MainWindow::on_DisconnectButton_clicked()
+void Logs::on_DisconnectButton_clicked()
 {
-    serialPort.close();
-    ui->textBrowser->append("Disconnected from COM");
+    //serialPort.close();
+    ui->textBrowser_logs->append("Disconnected from COM");
     buffer.remove(0,100);
 }
 
-void MainWindow::on_ClearButton_clicked()
+void Logs::on_ClearButton_clicked()
 {
-
-    ui->textBrowser->clear();
+    ui->textBrowser_logs->clear();
 
 }
 
-void MainWindow::on_StopButton_clicked()
+void Logs::on_StopButton_clicked()
 {
 
-    serialPort.close();
+   //erialPort.close();
     buffer.remove(0,100);
-    ui->textBrowser->append("STOP from COM");
+    ui->textBrowser_logs->append("STOP from COM");
 
 }
 
