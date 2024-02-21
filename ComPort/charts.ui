@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>График</string>
   </property>
-  <widget class="QChartView" name="graphicsView_Y">
+  <widget class="QChartView" name="graphicsViewSpringTemp">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -23,7 +23,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QChartView" name="graphicsView_X">
+  <widget class="QChartView" name="graphicsViewGravity">
    <property name="geometry">
     <rect>
      <x>760</x>

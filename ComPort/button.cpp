@@ -18,14 +18,18 @@ void MainWindow::on_ConnectButton_clicked()
         ui->statusBar->showMessage("Проблемы с подключением");
     } else {
 
-
+        serialPort.setBaudRate(QSerialPort::Baud9600);
+        serialPort.setDataBits(QSerialPort::Data8);
+        serialPort.setStopBits(QSerialPort::OneStop);
+        serialPort.setParity(QSerialPort::NoParity);
+        serialPort.setFlowControl(QSerialPort::NoFlowControl);
         ui->statusBar->showMessage("Connected is successfully");
         ui->textBrowser->setTextColor(Qt::black);
-
+        connect(tmr,SIGNAL(timeout()),this,SLOT(receiveMessage()));
     }
     tmrXY = new QTimer(this);
     tmrXY -> setInterval(500);
-    connect(tmrXY, SIGNAL(timeout()), this, SLOT(clear_XY()));
+    //connect(tmrXY, SIGNAL(timeout()), this, SLOT(clear_XY(int number_X, int number_Y )));
     tmrXY -> start();
 
 }
@@ -33,13 +37,13 @@ void MainWindow::on_ConnectButton_clicked()
 void Logs::on_DisconnectButton_clicked()
 {
     //serialPort.close();
-    ui->textBrowser_logs->append("Disconnected from COM");
+    ui->textBrowserLogs->append("Disconnected from COM");
     buffer.remove(0,100);
 }
 
 void Logs::on_ClearButton_clicked()
 {
-    ui->textBrowser_logs->clear();
+    ui->textBrowserLogs->clear();
 
 }
 
@@ -48,7 +52,7 @@ void Logs::on_StopButton_clicked()
 
    //erialPort.close();
     buffer.remove(0,100);
-    ui->textBrowser_logs->append("STOP from COM");
+    ui->textBrowserLogs->append("STOP from COM");
 
 }
 

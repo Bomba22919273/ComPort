@@ -31,33 +31,40 @@ public:
 public slots:
     void wheelEvent(QWheelEvent *event);
     void keyPressEvent(QKeyEvent *event);
-    void charts_is_open();
-    void drawAxis_X();
-    void drawAxis_Y();
-    void clearAxis();
-    void initDrawChart_X();
-    void initDrawChart_Y();
+
+    void chartsIsOpen();
+
+    void scalingAxisSpringTemp(int number_X);
+    void scalingAxisGravity(int number_Y);
+
+    void displayAxisSpringTemp();
+    void displayAxisGravity();
+
+    void updateAxis(int number_X, int number_Y);
+
+    void dataChartSpringTemp(QString dataSpringTemp);
+    void dataChartGravity(QString dataGravity);
+
 private:
     Ui::Charts *ui;
 
-    QChart *chart_X;
-    QChart *chart_Y;
+    QChart *chartGravity;
+    QChart *chartSpringTemp;
 
-    QSplineSeries *series_X;
-    QSplineSeries *series_Y;
+    QSplineSeries *seriesGravity;
+    QSplineSeries *seriesSpringTemp;
 
-    QDateTimeAxis *axisX_forChart_X;
-    QDateTimeAxis *axisX_forChart_Y;
+    QDateTimeAxis *axisX_Gravity;
+    QDateTimeAxis *axisX_SpringTemp;
 
-    QValueAxis *axisY_forChart_X;
-    QValueAxis *axisY_forChart_Y;
+    QValueAxis *axisY_Gravity;
+    QValueAxis *axisY_SpingTemp;
 
 
     double gravity;
     double springTemperature;
 
-    int number_X;
-    int number_Y;
+
     int rangeMin_X = 5000;
     int rangeMin_Y = 5000;
     int rangeMax_X = -5000;

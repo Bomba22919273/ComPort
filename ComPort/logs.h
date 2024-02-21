@@ -17,6 +17,7 @@
 #include <QTimer>
 #include <QComboBox>
 #include <QStringList>
+#include <QPainter>
 
 
 namespace Ui {
@@ -30,14 +31,24 @@ class Logs : public QWidget
 public:
     explicit Logs(QWidget *parent = nullptr);
     ~Logs();
-    QSerialPort serialPortLogs;
+    QSerialPort *serialPortLogs;
+
+    virtual void  paintEvent(QPaintEvent *event);
 
 
 private slots:
+
+
     void selectedBaudRate();
+    void selectedDataBits();
+    void selectedParityNone();
+    void selectStopBits();
+
 
 public slots:
-    void logsIsOpen(QString data);
+    void showLogs(QString data);
+    void settingsSerialPort(QSerialPort &serialPort);
+
     void on_ClearButton_clicked();
     void on_DisconnectButton_clicked();
     void on_StopButton_clicked();

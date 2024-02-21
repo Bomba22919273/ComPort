@@ -1,8 +1,6 @@
 #ifndef  MAINWINDOW_H
 #define MAINWINDOW_H
 
-
-
 #include <QMainWindow>
 #include <QWidget>
 #include <QtSerialPort/QSerialPort>
@@ -39,19 +37,21 @@ public:
 
 
 signals:
-    void open_charts();
-    void open_logs(QString);
+    void openCharts();
+    void dataChartSpringTemp(QString);
+    void drawChartGravity(QString);
 
+    void openLogs(QString);
+    void connectSerialPort(QSerialPort &serialPort);
 
 private slots:
 
-
     void updateDateTime();
-    void initDrawChart_XY();
+    void initDrawChartDataInc();
     void receiveMessage();
     void on_RefreshButton_clicked();
     void on_ConnectButton_clicked();
-    void clearXY(int number_X, int number_Y );
+    void clearAxis();
     void on_openLogsButton_clicked();
     void on_openChartsButton_clicked();
 
@@ -68,15 +68,13 @@ private:
     QString y0;
 
 
-    QChart *chart_XY;
+    QChart *chartDataInc;
 
-    QValueAxis *axisX_forChart_XY;
-    QValueAxis *axisY_forChart_XY;
+    QValueAxis *axisX_DataInc;
+    QValueAxis *axisY_DataInc;
 
     QScatterSeries *series_X0Y0;
-    QScatterSeries *series_XY;
-
-
+    QScatterSeries *seriesDataInc;
 
     QTimer *tmrAxis;
     QTimer *tmr;
@@ -87,6 +85,8 @@ private:
     QSerialPort serialPort;
     QSerialPortInfo info;
 
+    int number_X;
+    int number_Y;
     int X_max = -1000;
     int X_min =10000;
     int Y_max = -10000;

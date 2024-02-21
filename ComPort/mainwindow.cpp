@@ -1,25 +1,32 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
-
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+
     ui->lcdNumber->setDigitCount(19);
+
     charts = new Charts;
-    connect(this, &MainWindow::open_charts, charts, &Charts::charts_is_open );
+    connect(this, &MainWindow::openCharts, charts, &Charts::chartsIsOpen );
+    connect(this, &MainWindow::drawChartGravity, charts, &Charts::dataChartGravity);
+
+
     logs = new Logs;
-    // Отображение актуального времени
+    connect(this, &MainWindow::openLogs, logs, &Logs::showLogs );
+    //connect(this, &MainWindow::connectSerialPort, logs, &Logs::settingsSerialPort);
+    connect(this, &MainWindow::dataChartSpringTemp, charts, &Charts::dataChartSpringTemp);
+
     tmr = new QTimer(this);
     tmr->start();
-    tmr->setInterval(500);
+    tmr->setInterval(200);
+
     connect(tmr,SIGNAL(timeout()), this, SLOT(updateDateTime()));
-    connect(tmr,SIGNAL(timeout()),this,SLOT(receiveMessage()));
-    connect(this, &MainWindow::open_logs, logs, &Logs::logsIsOpen );
+
+
 
     tmrAxis = new QTimer(this);
     tmrAxis -> setInterval(5000);
@@ -34,14 +41,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->comboBox_CP->addItems(stringPorts);
 
 
-    initDrawChart_XY();
+    initDrawChartDataInc();
 
 }
 
 void MainWindow::receiveMessage()
 {
 
+
 //JSON_______________________________________________________________________________
+
     QByteArray data;
 
 
@@ -59,63 +68,57 @@ void MainWindow::receiveMessage()
             if (error.error == QJsonParseError::NoError) {
 
                 jsonString = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+                ui->textBrowser->append(jsonString);
 
-                emit open_logs(jsonString);
-
-
-//                QJsonValue inclinometerXValue = jsonObject.value("inclinometerX");
-//                if (inclinometerXValue.isDouble()) {
-//                    double inclinometerX = inclinometerXValue.toDouble();
-//                    QString x_s = QString::number(inclinometerX);
-//                    ui->textBrowser_X->setText(x_s);
-//                    number_X= x_s.toInt();
-
-//                }
-
-//                QJsonValue inclinometerYValue = jsonObject.value("inclinometerY");
-//                if (inclinometerYValue.isDouble()) {
-//                    double inclinometerY = inclinometerYValue.toDouble();
-//                    QString y_s = QString::number(inclinometerY);
-//                    ui->textBrowser_Y->setText(y_s);
-//                    number_Y= y_s.toInt();
-//                }
-
-//                QJsonValue SpringTemperatureValue = jsonObject.value("springTemperature");
-//                if (SpringTemperatureValue.isDouble()) {
-//                    double SpringTemperature = SpringTemperatureValue.toDouble();
-//                    QString st_s = QString::number(SpringTemperature);
-//                    ui->textBrowser_ST->setText(st_s);
-
-//                    QDateTime currentTime_ST = QDateTime::currentDateTime();
-//                    chart_X->axisX()->setMin(QDateTime::currentDateTime().addSecs(-15 * 1));       // За секунду до текущего времени системы
-//                    chart_X->axisX()->setMax(QDateTime::currentDateTime().addSecs(0));
-//                    springTemperature = st_s.toDouble();
-//                    series_X->append(currentTime_ST.toMSecsSinceEpoch(), springTemperature);
-
-//                }
+                emit openLogs(jsonString);
+}
 
 
-//                QJsonValue GravityValue = jsonObject.value("gravity");
-//                if ( GravityValue.isDouble()) {
-//                    double  Gravity = GravityValue.toDouble();
-//                    QString grav_s = QString::number( Gravity);
-//                    ui->textBrowser_Gravity->setText(grav_s);
+            QJsonValue inclinometerXValue = jsonObject.value("inclinometerX");
+            if (inclinometerXValue.isDouble()) {
+                double inclinometerX = inclinometerXValue.toDouble();
+                QString x_s = QString::number(inclinometerX);
+                ui->textBrowser_X->setText(x_s);
+                number_X= x_s.toInt();
 
-//                    QDateTime currentTime_gravity = QDateTime::currentDateTime();
-//                    chart_Y->axisX()->setMin(QDateTime::currentDateTime().addSecs(-15 * 1));       // За секунду до текущего времени системы
-//                    chart_Y->axisX()->setMax(QDateTime::currentDateTime().addSecs(0));
-//                    gravity = grav_s.toDouble();
-//                    series_Y->append(currentTime_gravity.toMSecsSinceEpoch(), gravity);
+            }
 
-//                }
+            QJsonValue inclinometerYValue = jsonObject.value("inclinometerY");
+            if (inclinometerYValue.isDouble()) {
+                double inclinometerY = inclinometerYValue.toDouble();
+                QString y_s = QString::number(inclinometerY);
+                ui->textBrowser_Y->setText(y_s);
+                number_Y= y_s.toInt();
+            }
+
+            QJsonValue SpringTemperatureValue = jsonObject.value("springTemperature");
+            if (SpringTemperatureValue.isDouble()) {
+                double SpringTemperature = SpringTemperatureValue.toDouble();
+                QString st_s = QString::number(SpringTemperature);
+                ui->textBrowser_ST->setText(st_s);
+
+                //emit dataChartSpringTemp(st_s);
+
+
+
+            }
+
+
+            QJsonValue GravityValue = jsonObject.value("gravity");
+            if ( GravityValue.isDouble()) {
+                double  Gravity = GravityValue.toDouble();
+                QString grav_s = QString::number( Gravity);
+                ui->textBrowser_Gravity->setText(grav_s);
+
+                //emit drawChartGravity(grav_s);
+
             }
         }
 
-        data.clear();
-    }
-
+       ui->textBrowser->append("\n");
+       data.clear();
+  }
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -133,5 +136,5 @@ void MainWindow::on_openChartsButton_clicked()
 {
     charts->show();
 
-    emit open_charts();
+    emit openCharts();
 }
